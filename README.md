@@ -6,4 +6,7 @@ A simple webpage that shows results of reddit and stackoverflow with keyword sea
 file foramte should be                                                                                                         
 Project(folder)                                                                                                                
         app.py                                                                                                              
-        static(folder)                                                                                                                        style.css                                                                                                               templates(folder)                                                                                                                    index.html
+        static(folder)
+               style.css
+        templates(folder)          
+               index.html
