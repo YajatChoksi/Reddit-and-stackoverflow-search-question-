@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search from Multiple Websites</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</head>
+<body>
+    <header>
+        <h1>Search from Multiple Websites</h1>
+        <div id="google_translate_element"></div>
+    </header>
+
+    <main>
+        <form id="search-form" method="post" action="/">
+            <input type="text" id="search-input" name="query" placeholder="Enter your search term" required>
+            <select name="sort" id="sort-options">
+                <option value="relevance">Relevance</option>
+                <option value="top">Most Upvotes</option>
+                <option value="new">Newest</option>
+            </select>
+            <button type="submit" id="search-button">Search</button>
+        </form>
+
+        {% if query %}
+            <h2>Searching for "{{ query }}"</h2>
+        {% endif %}
+
+        <section id="results">
+            <h2>Results</h2>
+
+            {% if stackoverflow %}
+            <div class="result-box" id="stackoverflow-results">
+                <h3>Stack Overflow Results</h3>
+                {% for item in stackoverflow %}
+                    <div>
+                        <h4>{{ item.title }}</h4>
+                        <p>{{ item.body | safe | truncate(200) }}</p> <!-- Displaying an excerpt -->
+                        <a href="{{ item.link }}" target="_blank">View on Stack Overflow</a>
+                    </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p>No Stack Overflow results yet.</p>
+            {% endif %}
+
+            {% if reddit %}
+            <div class="result-box" id="reddit-results">
+                <h3>Reddit Results</h3>
+                {% for item in reddit %}
+                    <div>
+                        <h4>{{ item.data.title }}</h4>
+                        <p>{{ item.data.selftext | safe | truncate(200) }}</p> <!-- Displaying an excerpt -->
+                        <a href="https://reddit.com{{ item.data.permalink }}" target="_blank">View on Reddit</a>
+                    </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p>No Reddit results yet.</p>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <p>Yajat choksi 2024 Search Website</p>
+    </footer>
+</body>
+</html>
